@@ -1,9 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import beta
-import numpy as np
-import matplotlib.pyplot as plt
 from scipy.stats import norm
+
 
 def MAP():
 
@@ -36,6 +35,7 @@ def MAP():
     plt.title('Maximum a Posteriori Estimation')
     plt.legend()
     plt.savefig("plots/MAP.jpg", dpi=400)
+
 
 def map_coin():
     # Define the parameters
