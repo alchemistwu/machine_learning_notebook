@@ -1,5 +1,5 @@
-from examples.information_retrieval.Loader import clean_text, load_example_data
-from examples.information_retrieval.Encoder import TFIDFTransformer
+from Loader import clean_text, load_example_data
+from Encoder import TFIDFTransformer
 
 documents = load_example_data()
 

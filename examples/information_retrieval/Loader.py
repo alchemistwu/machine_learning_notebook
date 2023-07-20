@@ -3,11 +3,16 @@ import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import re
 import string
-
+from typing import List
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', "data")
 
 
-def get_example_txt_file_path():
+def get_example_txt_file_path() -> str:
+    """
+    return the path of an example txt file
+    Returns:
+        str: an absolute path to the example text file
+    """
     file_name = os.listdir(DATA_DIR)[0]
     file_dir = os.path.join(DATA_DIR, file_name)
     assert os.path.exists(file_dir)
@@ -15,6 +20,14 @@ def get_example_txt_file_path():
 
 
 def clean_text(text: str) -> str:
+    """
+    Toy method for cleaning text
+    Args:
+        text (str): dirty text
+
+    Returns:
+        str: cleaned text
+    """
     # Remove Unicode
     text = re.sub(r'[^\x00-\x7F]+', ' ', text)
     # Remove Mentions
@@ -23,8 +36,8 @@ def clean_text(text: str) -> str:
     text = text.lower()
     # Remove punctuations
     text = re.sub(r'[%s]' % re.escape(string.punctuation),
-                            ' ',
-                            text)
+                  ' ',
+                  text)
     # Lowercase the numbers
     text = re.sub(r'[0-9]', '', text)
     # Remove the doubled space
@@ -32,7 +45,15 @@ def clean_text(text: str) -> str:
     return text
 
 
-def clean_doc(documents):
+def clean_doc(documents: List) -> List[str]:
+    """
+    Cleaning a list of docs.
+    Args:
+        documents (List): a list of documents
+
+    Returns:
+        List: a list of cleaned documents
+    """
     documents_clean = []
     for d in documents:
         documents_clean.append(clean_text(d))
@@ -40,6 +61,18 @@ def clean_doc(documents):
 
 
 def load_example_data(file_path: str = get_example_txt_file_path()):
+    """
+    Loading example text data. Including the following workflow:
+    1. load the text file.
+    2. split the text file into multiple documents
+    3. clean each document in the list
+    4. return the list of cleaned documents
+    Args:
+        file_path (str, optional): _description_. Defaults to get_example_txt_file_path().
+
+    Returns:
+        _type_: _description_
+    """
     documents = TextLoader(file_path, encoding='utf8').load()
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=100,
